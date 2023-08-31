@@ -18,7 +18,8 @@ public class User {
         return BCrypt.hashpw(pass, salt);
     }
 
-    private boolean passwordCheck(String password){
+    public boolean passwordCheck(String password){
         return BCrypt.checkpw(password, hashedPassword);
     }
+
 }
