@@ -29,17 +29,19 @@ public class AutorizationUI {
 
             try {
                 checkAutorization(login, pass);
-                System.out.println("Доступ разрешен для пользователя " + login + " с паролем: " +
-                        getUserByLogin(login).hashedPassword);
-                System.out.println();
-            } catch (AccessDeniedException | UserNotFoundException e) {
+                    System.out.println("Доступ разрешен для пользователя " + login + " с паролем: " +
+                            getUserByLogin(login).hashedPassword);
+                    System.out.println();
+
+            } catch (UserNotFoundException | AutorizationException | AccessDeniedException e) {
                 System.out.println(e.getMessage());
                 System.out.println();
             }
         }
     }
 
-    private void checkAutorization(String login, String pass) throws AccessDeniedException, UserNotFoundException {
+    private void checkAutorization(String login, String pass) throws UserNotFoundException,
+            AccessDeniedException, AutorizationException {
 
         User user = getUserByLogin(login);
 
@@ -47,6 +49,8 @@ public class AutorizationUI {
             if (user.age < (byte) 18) {
                 throw new AccessDeniedException();
             }
+        } else {
+            throw new AutorizationException();
         }
     }
 
